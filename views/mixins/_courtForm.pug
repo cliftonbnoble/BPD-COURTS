@@ -1,0 +1,47 @@
+mixin courtForm(court = {})
+  form(action=`/add/${court._id || ''}` method="POST" class="card")
+    label(for="court") Court
+    input(type="text" name="court" value=court.court)
+    label(for="defendant") Defendant
+    input(type="text" name="defendant" value=court.defendant)
+    label(for="docketNumber") DocketNumber
+    input(type="text" name="docketNumber" value=court.docketNumber)
+    label(for="date") Date
+    input(type="date" name="date" value=court.date)
+    label(for="time") Time
+    input(type="time" name="time" value=court.time)
+    label(for="department") Department
+    input(type="text" name="department" value=court.department)
+    label(for="officer") Officer 1
+    input(type="text" name="officer" value=court.officer)
+    label(for="phoneNumbers") Officer 1 Cell Number
+    input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
+    //- label(for="officer") Officer 2
+    //- input(type="text" name="officer" value=court.officer)
+    //- label(for="phoneNumbers") Officer 2 Cell Number
+    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
+    //- label(for="officer") Officer 3
+    //- input(type="text" name="officer" value=court.officer)
+    //- label(for="phoneNumbers") Officer 3 Cell Number
+    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
+    //- label(for="witness") witness
+    //- input(type="text" name="witness" value=court.witness)
+    //- label(for="phoneNumbers") Phone Number
+    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
+    
+    //- address LAT AND LONG
+    label(for="address") Address
+    input(type="text" id="address" name="location[address]" value=(court.location && court.location.address))
+    label(for='lng') Address Lng
+    input(type="text" id="lng" name="location[coordinates][0]" value=(court.location && court.location.coordinates[0]) required)
+    label(for='lat') Address Lat
+    input(type="text" id="lat" name="location[coordinates][1]" value=(court.location && court.location.coordinates[1]) required)
+    label(for="disposition" name="disposition") Disposition    
+    - const choices = ['Going', 'Not Going', 'Other']
+    - const tags = court.tags || []
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="disposition" checked=(tags.includes(choice)))
+          label(for=choice) #{choice}
+    input(type="submit" value="Save ➡️" class="button")

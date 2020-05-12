@@ -1,2 +1,2 @@
-# BPD-COURTS
-Court application to monitor and schedule court dates for BPD
+# BPD-COURT-APP
+CRUD App to organize trial dates and alert witnesses of time changes and room changes

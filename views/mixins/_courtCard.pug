@@ -1,0 +1,19 @@
+mixin courtCard(court = {})
+  .store
+    .store__hero
+      .store__actions
+        .store__action.store__action--edit
+          a(href=`/courts/${court._id}/edit`)
+            != h.icon('pencil')
+      img(src=`/uploads/${court.photo || 'court.jpg'}`)
+      h2.title
+        a(href=`/court/${court.slug}`) #{court.court}
+    .store__details
+      p <strong>Defendant:</strong> #{court.defendant}
+      p <strong>Docket Number:</strong> #{court.docketNumber}
+      p <strong>Date:</strong> #{court.date} 
+      p <strong>Time:</strong> #{court.time}
+      p <strong>Department:</strong> #{court.department}
+      p <strong>Officer:</strong> #{court.officer}
+      //- p Witness: #{court.witness}
+      p <strong>Disposition:</strong> #{court.disposition}
