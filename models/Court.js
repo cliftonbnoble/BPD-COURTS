@@ -46,7 +46,7 @@ phoneNumbers: {
     },
     required: [true, 'User phone number required']
   },
-disposition: [String],
+tags: [String],
 created: {
     type: Date,
     default: Date.now

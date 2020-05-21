@@ -16,19 +16,6 @@ mixin courtForm(court = {})
     input(type="text" name="officer" value=court.officer)
     label(for="phoneNumbers") Officer 1 Cell Number
     input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
-    //- label(for="officer") Officer 2
-    //- input(type="text" name="officer" value=court.officer)
-    //- label(for="phoneNumbers") Officer 2 Cell Number
-    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
-    //- label(for="officer") Officer 3
-    //- input(type="text" name="officer" value=court.officer)
-    //- label(for="phoneNumbers") Officer 3 Cell Number
-    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
-    //- label(for="witness") witness
-    //- input(type="text" name="witness" value=court.witness)
-    //- label(for="phoneNumbers") Phone Number
-    //- input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
-    
     //- address LAT AND LONG
     label(for="address") Address
     input(type="text" id="address" name="location[address]" value=(court.location && court.location.address))
@@ -36,12 +23,13 @@ mixin courtForm(court = {})
     input(type="text" id="lng" name="location[coordinates][0]" value=(court.location && court.location.coordinates[0]) required)
     label(for='lat') Address Lat
     input(type="text" id="lat" name="location[coordinates][1]" value=(court.location && court.location.coordinates[1]) required)
-    label(for="disposition" name="disposition") Disposition    
+    label(for="disposition") Disposition    
     - const choices = ['Going', 'Not Going', 'Other']
     - const tags = court.tags || []
     ul.tags
       each choice in choices
         .tag.tag__choice
-          input(type="checkbox" id=choice value=choice name="disposition" checked=(tags.includes(choice)))
+          input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
           label(for=choice) #{choice}
+          //-Submit Button
     input(type="submit" value="Save ➡️" class="button")
