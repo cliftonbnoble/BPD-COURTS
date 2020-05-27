@@ -64,15 +64,37 @@ address: {
     type: String,
     required: 'You must supply an address'
 }
-}
+},
+photo: String,
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author'
+  }
 });
 
-courtSchema.pre('save', function(next) {
+//define our index
+courtSchema.index({
+    court: 'text',
+    docketNumber: 'text',
+    officer: 'text'
+});
+
+courtSchema.index({ location: '2dsphere' });
+
+courtSchema.pre('save', async function(next) {
     if(!this.isModified('docketNumber')) {
         next(); //skip it
         return;  //Stop this function from running
     }
     this.slug = slug(this.docketNumber)
+    //Find other slugs that have a similar slugs and rename [0, 1, 2, 3, 4, etc...]
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+    const courtsWithSlug = await this.constructor.find({ slug: slugRegEx });
+    if(courtsWithSlug.length) {
+        this.slug = `${this.slug}-${courtsWithSlug.length + 1}`
+    }
+
     next();
 
     //ToDo make slugs more resilient so we don't have duplicate docket # slugs in the future

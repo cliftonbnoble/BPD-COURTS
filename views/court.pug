@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${court.photo || 'store.png'}`)
+      h2.title.title--single
+        a(href=`/courts/${court.slug}`) #{court.court}
+
+  .single__details.inner
+    img.single__map(src=h.staticMap(court.location.coordinates))
+    p.single__location= court.location.address
+    h7 Defendant 
+      p= court.defendant
+    h7 Docket Number
+      p= court.docketNumber
+    h7 Date
+      p= court.date
+    h7 Time
+      p= court.time
+    h7 Department
+      p= court.department
+    h7 Officer
+      p= court.officer
+    
+
+    if court.tags
+      ul.tags
+        each tag in court.tags
+          li.tag
+            a.tag__link(href=`/tags/${tag}`)
+              span.tag__text ##{tag}

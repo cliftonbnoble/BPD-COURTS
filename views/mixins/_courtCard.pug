@@ -2,17 +2,20 @@ mixin courtCard(court = {})
   .store
     .store__hero
       .store__actions
-        .store__action.store__action--edit
-          a(href=`/courts/${court._id}/edit`)
-            != h.icon('pencil')
+        if user && court.author.equals(user._id)
+          .store__action.store__action--edit
+            a(href=`/courts/${court._id}/edit`)
+              != h.icon('pencil')
       img(src=`/uploads/${court.photo || 'court.jpg'}`)
       h2.title
         a(href=`/court/${court.slug}`) #{court.court}
     .store__details
       p <strong>Defendant:</strong> #{court.defendant}
       p <strong>Docket Number:</strong> #{court.docketNumber}
-      p <strong>Date:</strong> #{court.date} 
-      p <strong>Time:</strong> #{court.time}
+      p <strong>Date:</strong> #{h.moment(court.date).format("MMM Do YYYY")} 
+      p <strong>Time:</strong> #{h.moment(court.time).format(HH:mm a)}
       p <strong>Department:</strong> #{court.department}
       p <strong>Officer:</strong> #{court.officer}
       p <strong>Disposition:</strong> #{court.tags}
+
+      

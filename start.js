@@ -21,6 +21,7 @@ mongoose.connection.on('error', (err) => {
 
 //Import all of our models
 require("./models/Court")
+require("./models/User")
 
 // Start our app!
 const app = require('./app');
@@ -29,3 +30,5 @@ const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });
 
+//temp send email
+require('./handlers/mail');

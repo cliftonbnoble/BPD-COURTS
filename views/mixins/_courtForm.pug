@@ -1,5 +1,5 @@
 mixin courtForm(court = {})
-  form(action=`/add/${court._id || ''}` method="POST" class="card")
+  form(action=`/add/${court._id || ''}` method="POST" class="card" enctype="multipart/form-data")
     label(for="court") Court
     input(type="text" name="court" value=court.court)
     label(for="defendant") Defendant
@@ -16,6 +16,11 @@ mixin courtForm(court = {})
     input(type="text" name="officer" value=court.officer)
     label(for="phoneNumbers") Officer 1 Cell Number
     input(type="tel" name="phoneNumbers" value=court.phoneNumbers)
+    //- image upload if I decide to keep it
+    label(for="photo") Photo
+      input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+      if court.photo
+        img(src=`/uploads/${court.photo}`, alt=court.name width=200)
     //- address LAT AND LONG
     label(for="address") Address
     input(type="text" id="address" name="location[address]" value=(court.location && court.location.address))
