@@ -14,6 +14,9 @@ const multerOptions = {
         }
     }
 };
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);  
 
 
 exports.homePage = (req, res) => {
@@ -69,7 +72,8 @@ exports.editCourt = async (req, res) => {
     confirmOwner(court, req.user)
     //Render out the edit form so the user can update their store
     res.render('editCourt', { title: `Edit ${court.court}`, court })
-
+    //Pass it to the next controller 
+    // next();
 }
 
 exports.updateCourt = async (req, res) => {
@@ -80,9 +84,21 @@ exports.updateCourt = async (req, res) => {
         new: true, //return the new case instead of the old one
         runValidators: true
     }).exec();
+    console.log("INSIDE THE UPDATE FUNC")
     //Redirect them to the case and tell them it worked
-    req.flash('success', `Successfully updated <strong>${court.court}</strong>. <a href="/courts/${court.slug}"> View Store ➡️</a>`)
+    req.flash('success', `Successfully updated <strong>${court.court}</strong>. <a href="/court/${court.slug}"> View Case ➡️</a>`)
+    //Redirect to the edited court case
     res.redirect(`/courts/${court._id}/edit`);
+    //Move to notify Change func
+    const sms = "+1" + court.phoneNumbers.replace(/-|\s/g,"")
+
+    console.log("It's Working, SMS", sms)
+    client.messages.create({
+     body: `A Case you are scheduled to appear on has been altered.  Please follow the link to find the new details. http://localhost:7777/court/${court.slug} View Case ➡️`,
+     from: '+13305371719',
+     to: sms
+   }).then(message => console.log(message.sid));
+    
     
 }
 

@@ -13,7 +13,7 @@ mixin courtCard(court = {})
       p <strong>Defendant:</strong> #{court.defendant}
       p <strong>Docket Number:</strong> #{court.docketNumber}
       p <strong>Date:</strong> #{h.moment(court.date).format("MMM Do YYYY")} 
-      p <strong>Time:</strong> #{h.moment(court.time).format(HH:mm a)}
+      p <strong>Time:</strong> #{court.time}
       p <strong>Department:</strong> #{court.department}
       p <strong>Officer:</strong> #{court.officer}
       p <strong>Disposition:</strong> #{court.tags}
