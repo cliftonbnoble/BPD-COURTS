@@ -16,7 +16,9 @@ const multerOptions = {
 };
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken);  
+const client = require('twilio')(accountSid, authToken);
+const swal = require('sweetalert');
+  
 
 
 exports.homePage = (req, res) => {
@@ -68,12 +70,42 @@ const confirmOwner = (court, user) => {
 exports.editCourt = async (req, res) => {
     //1 find the court given the id
     const court = await Court.findOne({ _id: req.params.id })
-    //2 confirm they own the store - I'll do this later
+    //2 confirm they own the store 
     confirmOwner(court, req.user)
     //Render out the edit form so the user can update their store
     res.render('editCourt', { title: `Edit ${court.court}`, court })
     //Pass it to the next controller 
     // next();
+}
+
+exports.deleteCourt = async (req, res) => {
+    const court = await Court.findOne({ _id: req.params.id })
+    console.log(court, "ITS WORKING")
+    res.render('court', { court, title: court.court })
+    //Alert user to make sure they want to delete
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            court.deleteOne()
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+        } else {
+          swal("Your imaginary file is safe!");
+          res.redirect('/')
+        }
+      });
+
+    //If confirm then delete then redirect to homepage
+
+    //If cancel redirect without deleting
+
 }
 
 exports.updateCourt = async (req, res) => {

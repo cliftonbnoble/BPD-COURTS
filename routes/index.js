@@ -15,6 +15,8 @@ router.post('/add',
     catchErrors(courtController.resize), 
     catchErrors(courtController.createCourt));
 
+router.get('/courts/:id/delete', catchErrors(courtController.deleteCourt));
+
 router.post('/add/:id', 
     courtController.upload, 
     catchErrors(courtController.resize),
