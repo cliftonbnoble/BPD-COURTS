@@ -20,6 +20,9 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 // Some details about the site
 exports.siteName = `BPD Court App`;
 
+// Sweet Alerts
+exports.swal = require('sweetalert');
+
 exports.menu = [
   { slug: '/courts', title: 'Courts', icon: 'store', },
   // { slug: '/tags', title: 'Tags', icon: 'tag', },

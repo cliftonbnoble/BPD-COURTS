@@ -81,26 +81,27 @@ exports.editCourt = async (req, res) => {
 exports.deleteCourt = async (req, res) => {
     const court = await Court.findOne({ _id: req.params.id })
     console.log(court, "ITS WORKING")
-    res.render('court', { court, title: court.court })
+    swal("Here's the title!", "...and here's the text!");
+    res.render('delete', { court, title: court.court },)
     //Alert user to make sure they want to delete
-    swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-            court.deleteOne()
-          swal("Poof! Your imaginary file has been deleted!", {
-            icon: "success",
-          });
-        } else {
-          swal("Your imaginary file is safe!");
-          res.redirect('/')
-        }
-      });
+    // swal({
+    //     title: "Are you sure?",
+    //     text: "Once deleted, you will not be able to recover this imaginary file!",
+    //     icon: "warning",
+    //     buttons: true,
+    //     dangerMode: true,
+    //   })
+    //   .then((willDelete) => {
+    //     if (willDelete) {
+    //         court.deleteOne()
+    //       swal("Poof! Your imaginary file has been deleted!", {
+    //         icon: "success",
+    //       });
+    //     } else {
+    //       swal("Your imaginary file is safe!");
+    //       res.redirect('/')
+    //     }
+    //   });
 
     //If confirm then delete then redirect to homepage
 

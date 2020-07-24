@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${court.photo || 'store.png'}`)
+      h2.title.title--single
+        a(href=`/courts/${court.slug}`) #{court.court}
+
+  .single__details.inner
+    img.single__map(src=h.staticMap(court.location.coordinates))
+    p.single__location
+      a(href=`http://maps.google.com/?&daddr=${court.location.address}`) #{court.location.address}
+    br
+    br
+    .reviews
+      .review
+        .review__header 
+          h7 Defendant:
+            br
+            p2   #{court.defendant}
+          .review__author
+            h7 Docket Number:
+              br
+              p2   ##{court.docketNumber}
+        .review__body
+          .review__header 
+            h7 Date and Time:
+              br
+              p2  #{h.moment(court.date).format("MMM Do YYYY")} @ #{court.time}
+            .review__author
+              h7 Department:  
+                br
+                p2  #{court.department}
+        .review__body
+          .review__header
+            h7 Officer:
+              br
+              p2   #{court.officer}
+            .review__author
+              h7 Disposition:
+                if court.tags
+                  ul.tags
+                    each tag in court.tags
+                      li.tag
+                        a.tag__link(href=`/tags/${tag}`)
+                          span.tag__text ##{tag}
+      input(type="submit" value="Delete 🗑" class="button2")
+        
