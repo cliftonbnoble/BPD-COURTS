@@ -47,7 +47,7 @@
     "sweetalert": "^2.1.2",
     "twilio": "^3.43.1",
     "uuid": "3.0.1",
-    "validator": "7.0.0"
+    "validator": "13.7.0"
   },
   "devDependencies": {
     "autoprefixer": "6.7.7",
